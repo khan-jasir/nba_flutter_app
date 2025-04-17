@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "498795297534",
+    "project_id": "flutter-nba",
+    "storage_bucket": "flutter-nba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498795297534:android:060fcef50b078ad7d943af",
+        "android_client_info": {
+          "package_name": "com.example.nba_flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc6wqmEPfNAihjL_jmzyUrx77GLvQpT0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
