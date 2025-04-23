@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:nba_flutter_app/home/data/models/hooks/priority_level.dart';
 import 'package:nba_flutter_app/home/data/models/hooks/task_date_hook.dart';
+import 'package:nba_flutter_app/home/widgets/task_priority.dart';
 
 part 'task_item.mapper.dart';
 
@@ -47,7 +48,6 @@ class TaskItem with TaskItemMappable {
     this.lob,
   });
 
-
   bool get isBirthdayTask {
     if(taskName.toLowerCase().contains('birthday')) {
       return true;
@@ -63,23 +63,30 @@ class TaskItem with TaskItemMappable {
     return false;
   }
 
+  bool get isTrainingTask {
+    if(taskName.toLowerCase().contains('training')) {
+      return true;
+    }
+    return false;
+  }
+
   String taskHeading(String name) {
     if (isBirthdayTask) {
-      return "Don’t miss the chance to wish $name a happy birthday!";
+      return "Don't miss the chance to wish $name a happy birthday!";
     } else if (isCrossSellTask) {
       return "New Cross Sell Opportunity to $name";
     } else {
-      return "Don’t miss an opportunity to connect with $name!";
+      return "Don't miss an opportunity to connect with $name!";
     }
   }
 
-   String taskSubheading(String name) {
+  String taskSubheading(String name) {
     if (isBirthdayTask) {
       return "It's important to communicate with clients on special occasions";
     } else if (isCrossSellTask) {
       return "With the recent product that has been purchased by $name yesterday, we feel this product can be a perfect additional buy.";
     } else {
-      return "Don’t miss an opportunity to connect with clients!";
+      return "Don't miss an opportunity to connect with clients!";
     }
   }
 
@@ -93,5 +100,99 @@ class TaskItem with TaskItemMappable {
     }
   }
 
+  // Create a factory constructor to group tasks by status
+  static Map<String, List<TaskItem>> groupByStatus(List<TaskItem> tasks) {
+    return tasks.fold<Map<String, List<TaskItem>>>(
+      {},
+      (map, task) {
+        if (!map.containsKey(task.finalStatus)) {
+          map[task.finalStatus] = [];
+        }
+        map[task.finalStatus]!.add(task);
+        return map;
+      },
+    );
+  }
 
+  // Group tasks by their type (birthday, cross-sell, training)
+  static Map<String, List<TaskItem>> groupByType(List<TaskItem> tasks) {
+    return tasks.fold<Map<String, List<TaskItem>>>(
+      {},
+      (map, task) {
+        String taskType;
+        if (task.isBirthdayTask) {
+          taskType = 'Birthday Tasks';
+        } else if (task.isCrossSellTask) {
+          taskType = 'Cross-Sell Opportunities';
+        } else if (task.isTrainingTask) {
+          taskType = 'Training Tasks';
+        } else {
+          taskType = 'Other Tasks';
+        }
+
+        if (!map.containsKey(taskType)) {
+          map[taskType] = [];
+        }
+        map[taskType]!.add(task);
+        return map;
+      },
+    );
+  }
+
+  // Get the display title for a task type
+  static String getTaskTypeTitle(String taskType, int taskCount) {
+    switch (taskType) {
+      case 'Birthday Tasks':
+        return 'Birthday Wishes (X$taskCount)';
+      case 'Cross-Sell Opportunities':
+        return 'Cross-Sell Opportunities (X$taskCount)';
+      case 'Training Tasks':
+        return 'Training Activities (X$taskCount)';
+      default:
+        return 'Other Tasks';
+    }
+  }
+
+  // Factory constructor for creating a birthday task
+  factory TaskItem.birthday({
+    required String clientName,
+    required String assignedDate,
+    required String status,
+  }) {
+    return TaskItem(
+      taskName: "Birthday Wish",
+      taskDescription: "Don't miss the chance to wish $clientName a happy birthday!",
+      priorityLevel: PriorityLevel.high,
+      priorityOrder: "1",
+      taskSourceId: "BIRTHDAY_${DateTime.now().millisecondsSinceEpoch}",
+      lob: "Birthday",
+      customerName: clientName,
+      finalStatus: status,
+      startDate: assignedDate,
+    );
+  }
+
+  // Factory constructor for creating a regular task
+  factory TaskItem.regular({
+    required String title,
+    required String description,
+    required PriorityLevel priorityLevel,
+    required String lob,
+    required String clientName,
+    required String assignedDate,
+    required String status,
+  }) {
+    return TaskItem(
+      taskName: title,
+      taskDescription: description,
+      priorityLevel: priorityLevel,
+      priorityOrder: priorityLevel == PriorityLevel.high ? "1" : 
+                    priorityLevel == PriorityLevel.medium ? "2" : "3",
+      taskSourceId: "TASK_${DateTime.now().millisecondsSinceEpoch}",
+      lob: lob,
+      customerName: clientName,
+      finalStatus: status,
+      startDate: assignedDate,
+    );
+  }
 }

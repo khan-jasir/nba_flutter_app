@@ -86,4 +86,21 @@ class HomeCubit extends Cubit<HomeState> {
       print('Error: $e');
     }
   }
+
+  void getCourseDetails({
+    required String sourceId,
+    required String type,
+  }) async {
+    try {
+      emit(state.copyWith(courseDetailsApiStatus: ApiStatus.loading));
+      final courseDetails = await _homeRespository.getLearningDetails(sourceId: sourceId, type: type);
+
+      emit(state.copyWith(
+        courseDetails: courseDetails.data?.courses?.first,
+        courseDetailsApiStatus: ApiStatus.success,
+      ));
+    } catch(e) {
+      emit(state.copyWith(courseDetailsApiStatus: ApiStatus.failure));
+    } 
+  }
 }

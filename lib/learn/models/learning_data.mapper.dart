@@ -22,12 +22,12 @@ class LearningDataMapper extends ClassMapperBase<LearningData> {
   @override
   final String id = 'LearningData';
 
-  static List<LearningCourse> _$courses(LearningData v) => v.courses;
+  static List<LearningCourse>? _$courses(LearningData v) => v.courses;
   static const Field<LearningData, List<LearningCourse>> _f$courses =
-      Field('courses', _$courses);
-  static LearningDataSummary _$summary(LearningData v) => v.summary;
+      Field('courses', _$courses, opt: true);
+  static LearningDataSummary? _$summary(LearningData v) => v.summary;
   static const Field<LearningData, LearningDataSummary> _f$summary =
-      Field('summary', _$summary);
+      Field('summary', _$summary, opt: true);
 
   @override
   final MappableFields<LearningData> fields = const {
@@ -94,8 +94,8 @@ extension LearningDataValueCopy<$R, $Out>
 abstract class LearningDataCopyWith<$R, $In extends LearningData, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, LearningCourse,
-      LearningCourseCopyWith<$R, LearningCourse, LearningCourse>> get courses;
-  LearningDataSummaryCopyWith<$R, LearningDataSummary, LearningDataSummary>
+      LearningCourseCopyWith<$R, LearningCourse, LearningCourse>>? get courses;
+  LearningDataSummaryCopyWith<$R, LearningDataSummary, LearningDataSummary>?
       get summary;
   $R call({List<LearningCourse>? courses, LearningDataSummary? summary});
   LearningDataCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
@@ -111,17 +111,19 @@ class _LearningDataCopyWithImpl<$R, $Out>
       LearningDataMapper.ensureInitialized();
   @override
   ListCopyWith<$R, LearningCourse,
-          LearningCourseCopyWith<$R, LearningCourse, LearningCourse>>
-      get courses => ListCopyWith($value.courses,
-          (v, t) => v.copyWith.$chain(t), (v) => call(courses: v));
+          LearningCourseCopyWith<$R, LearningCourse, LearningCourse>>?
+      get courses => $value.courses != null
+          ? ListCopyWith($value.courses!, (v, t) => v.copyWith.$chain(t),
+              (v) => call(courses: v))
+          : null;
   @override
-  LearningDataSummaryCopyWith<$R, LearningDataSummary, LearningDataSummary>
-      get summary => $value.summary.copyWith.$chain((v) => call(summary: v));
+  LearningDataSummaryCopyWith<$R, LearningDataSummary, LearningDataSummary>?
+      get summary => $value.summary?.copyWith.$chain((v) => call(summary: v));
   @override
-  $R call({List<LearningCourse>? courses, LearningDataSummary? summary}) =>
+  $R call({Object? courses = $none, Object? summary = $none}) =>
       $apply(FieldCopyWithData({
-        if (courses != null) #courses: courses,
-        if (summary != null) #summary: summary
+        if (courses != $none) #courses: courses,
+        if (summary != $none) #summary: summary
       }));
   @override
   LearningData $make(CopyWithData data) => LearningData(

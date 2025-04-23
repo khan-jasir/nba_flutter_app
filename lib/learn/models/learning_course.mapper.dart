@@ -60,7 +60,6 @@ class LearningCourseMapper extends ClassMapperBase<LearningCourse> {
   static LearningCourseMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = LearningCourseMapper._());
-      CourseCompletionStatusMapper.ensureInitialized();
       LearningModuleMapper.ensureInitialized();
     }
     return _instance!;
@@ -69,43 +68,36 @@ class LearningCourseMapper extends ClassMapperBase<LearningCourse> {
   @override
   final String id = 'LearningCourse';
 
-  static String _$courseId(LearningCourse v) => v.courseId;
+  static String? _$courseId(LearningCourse v) => v.courseId;
   static const Field<LearningCourse, String> _f$courseId =
-      Field('courseId', _$courseId, key: r'course_id');
-  static String _$courseName(LearningCourse v) => v.courseName;
+      Field('courseId', _$courseId, opt: true);
+  static String? _$courseName(LearningCourse v) => v.courseName;
   static const Field<LearningCourse, String> _f$courseName =
-      Field('courseName', _$courseName, key: r'course_name');
-  static CourseCompletionStatus _$isCompleted(LearningCourse v) =>
-      v.isCompleted;
-  static const Field<LearningCourse, CourseCompletionStatus> _f$isCompleted =
-      Field('isCompleted', _$isCompleted,
-          key: r'is_completed', hook: CourseCompletionHook());
+      Field('courseName', _$courseName, opt: true);
+  static String? _$isCompleted(LearningCourse v) => v.isCompleted;
+  static const Field<LearningCourse, String> _f$isCompleted =
+      Field('isCompleted', _$isCompleted, opt: true);
   static String? _$courseActualStartDate(LearningCourse v) =>
       v.courseActualStartDate;
-  static const Field<LearningCourse, String> _f$courseActualStartDate = Field(
-      'courseActualStartDate', _$courseActualStartDate,
-      key: r'course_actual_start_date');
+  static const Field<LearningCourse, String> _f$courseActualStartDate =
+      Field('courseActualStartDate', _$courseActualStartDate, opt: true);
   static String? _$courseActualEndDate(LearningCourse v) =>
       v.courseActualEndDate;
-  static const Field<LearningCourse, String> _f$courseActualEndDate = Field(
-      'courseActualEndDate', _$courseActualEndDate,
-      key: r'course_actual_end_date');
+  static const Field<LearningCourse, String> _f$courseActualEndDate =
+      Field('courseActualEndDate', _$courseActualEndDate, opt: true);
   static String? _$courseActualDueDate(LearningCourse v) =>
       v.courseActualDueDate;
-  static const Field<LearningCourse, String> _f$courseActualDueDate = Field(
-      'courseActualDueDate', _$courseActualDueDate,
-      key: r'course_actual_due_date');
+  static const Field<LearningCourse, String> _f$courseActualDueDate =
+      Field('courseActualDueDate', _$courseActualDueDate, opt: true);
   static String? _$userStartDate(LearningCourse v) => v.userStartDate;
-  static const Field<LearningCourse, String> _f$userStartDate = Field(
-      'userStartDate', _$userStartDate,
-      key: r'user_start_date', opt: true);
+  static const Field<LearningCourse, String> _f$userStartDate =
+      Field('userStartDate', _$userStartDate, opt: true);
   static String? _$userTotalDuration(LearningCourse v) => v.userTotalDuration;
-  static const Field<LearningCourse, String> _f$userTotalDuration = Field(
-      'userTotalDuration', _$userTotalDuration,
-      key: r'user_total_duration', opt: true);
-  static List<LearningModule> _$modules(LearningCourse v) => v.modules;
+  static const Field<LearningCourse, String> _f$userTotalDuration =
+      Field('userTotalDuration', _$userTotalDuration, opt: true);
+  static List<LearningModule>? _$modules(LearningCourse v) => v.modules;
   static const Field<LearningCourse, List<LearningModule>> _f$modules =
-      Field('modules', _$modules);
+      Field('modules', _$modules, opt: true);
 
   @override
   final MappableFields<LearningCourse> fields = const {
@@ -188,11 +180,11 @@ extension LearningCourseValueCopy<$R, $Out>
 abstract class LearningCourseCopyWith<$R, $In extends LearningCourse, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, LearningModule,
-      LearningModuleCopyWith<$R, LearningModule, LearningModule>> get modules;
+      LearningModuleCopyWith<$R, LearningModule, LearningModule>>? get modules;
   $R call(
       {String? courseId,
       String? courseName,
-      CourseCompletionStatus? isCompleted,
+      String? isCompleted,
       String? courseActualStartDate,
       String? courseActualEndDate,
       String? courseActualDueDate,
@@ -213,24 +205,26 @@ class _LearningCourseCopyWithImpl<$R, $Out>
       LearningCourseMapper.ensureInitialized();
   @override
   ListCopyWith<$R, LearningModule,
-          LearningModuleCopyWith<$R, LearningModule, LearningModule>>
-      get modules => ListCopyWith($value.modules,
-          (v, t) => v.copyWith.$chain(t), (v) => call(modules: v));
+          LearningModuleCopyWith<$R, LearningModule, LearningModule>>?
+      get modules => $value.modules != null
+          ? ListCopyWith($value.modules!, (v, t) => v.copyWith.$chain(t),
+              (v) => call(modules: v))
+          : null;
   @override
   $R call(
-          {String? courseId,
-          String? courseName,
-          CourseCompletionStatus? isCompleted,
+          {Object? courseId = $none,
+          Object? courseName = $none,
+          Object? isCompleted = $none,
           Object? courseActualStartDate = $none,
           Object? courseActualEndDate = $none,
           Object? courseActualDueDate = $none,
           Object? userStartDate = $none,
           Object? userTotalDuration = $none,
-          List<LearningModule>? modules}) =>
+          Object? modules = $none}) =>
       $apply(FieldCopyWithData({
-        if (courseId != null) #courseId: courseId,
-        if (courseName != null) #courseName: courseName,
-        if (isCompleted != null) #isCompleted: isCompleted,
+        if (courseId != $none) #courseId: courseId,
+        if (courseName != $none) #courseName: courseName,
+        if (isCompleted != $none) #isCompleted: isCompleted,
         if (courseActualStartDate != $none)
           #courseActualStartDate: courseActualStartDate,
         if (courseActualEndDate != $none)
@@ -239,7 +233,7 @@ class _LearningCourseCopyWithImpl<$R, $Out>
           #courseActualDueDate: courseActualDueDate,
         if (userStartDate != $none) #userStartDate: userStartDate,
         if (userTotalDuration != $none) #userTotalDuration: userTotalDuration,
-        if (modules != null) #modules: modules
+        if (modules != $none) #modules: modules
       }));
   @override
   LearningCourse $make(CopyWithData data) => LearningCourse(

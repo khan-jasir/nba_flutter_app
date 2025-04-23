@@ -1,5 +1,4 @@
 import 'package:nba_flutter_app/learn/models/learning_course.dart';
-import 'package:nba_flutter_app/learn/models/learning_record.dart';
 
 class LearningUtils {
 
@@ -19,7 +18,7 @@ class LearningUtils {
   }
 
   static List<LearningCourse> getCompletedCourses(List<LearningCourse> courses) {
-    return courses.where((course) => course.isCompleted == CourseCompletionStatus.yes).toList();
+    return courses.where((course) => course.isCourseCompleted).toList();
   }
 
   static List<LearningCourse> getInProgressCourses(List<LearningCourse> courses) {

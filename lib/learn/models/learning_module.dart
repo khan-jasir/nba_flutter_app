@@ -5,17 +5,16 @@ part 'learning_module.mapper.dart';
 
 @MappableClass()
 class LearningModule with LearningModuleMappable {
-
-  @MappableField(key: 'module_id')
-  final String moduleId;
-  @MappableField(key: 'module_name')
-  final String moduleName;
+  @MappableField(key: 'moduleId')
+  final String? moduleId;
+  @MappableField(key: 'moduleName')
+  final String? moduleName;
   @MappableField(key: 'materials')
-  final List<LearningMaterial> materials;
+  final List<LearningMaterial>? materials;
 
   LearningModule({
-    required this.moduleId,
-    required this.moduleName,
-    required this.materials,
+    this.moduleId,
+    this.moduleName,
+    this.materials,
   });
-}
+} 

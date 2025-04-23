@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nba_flutter_app/home/view/cubit/home_cubit.dart';
+import 'package:nba_flutter_app/learn/view/course_preview.dart';
 import 'package:nba_flutter_app/task_details/view/task_details.dart';
 import 'package:nba_flutter_app/home/data/models/task_item.dart';
 import 'package:nba_flutter_app/home/widgets/task_tile.dart';
@@ -30,6 +31,15 @@ class TaskListItems extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
+                if(taskItems[index].isTrainingTask) {
+                  context.read<HomeCubit>().
+                    getCourseDetails(sourceId: taskItems[index].taskSourceId, type: taskItems[index].taskName);
+                  pushWithTransition(context,BlocProvider.value(
+                    value: context.read<HomeCubit>(),
+                    child: CoursePreview()
+                  ));
+                  return;
+                }
                 pushWithTransition(
                   context, 
                   BlocProvider.value(

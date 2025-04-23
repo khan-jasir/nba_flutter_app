@@ -73,7 +73,7 @@ class _CourseMaterialCardState extends State<CourseMaterialCard> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
-                children: widget.learningModule.materials.map((material) {
+                children: widget.learningModule.materials!.map((material) {
                   return Column(
                     children: [
                       Row(
@@ -82,7 +82,7 @@ class _CourseMaterialCardState extends State<CourseMaterialCard> {
                           /// Material name (with text wrap)
                           Expanded(
                             child: Text(
-                              material.materialName,
+                              material.materialName ?? '',
                               style: const TextStyle(
                                 color: Colors.white70,
                                 fontSize: 14,

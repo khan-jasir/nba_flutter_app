@@ -3,6 +3,7 @@ import 'package:nba_flutter_app/core/local_storage.dart';
 import 'package:nba_flutter_app/home/data/models/task_details.dart';
 import 'package:nba_flutter_app/home/data/models/task_response.dart';
 import 'package:nba_flutter_app/home/domain/home_repository.dart';
+import 'package:nba_flutter_app/learn/models/learning_response.dart';
 
 class HomeRepositoryImpl implements HomeRespository {
 
@@ -45,4 +46,24 @@ class HomeRepositoryImpl implements HomeRespository {
       throw Exception('Failed to load tasks: $e');
     }
   }
+
+  @override
+  Future<LearningResponse> getLearningDetails({required String sourceId, required String type}) async {
+     try {
+      final agentId = await LocalStorage.getAgentPhone();
+      final response = await _client.get(
+        'http://$lan/nba/api/v1/task/$agentId/source/$sourceId?type=$type'
+      );
+
+      if (response.statusCode == 200) {
+        return LearningResponseMapper.fromMap(response.data);
+      } else {
+        throw Exception('Failed to load tasks');
+      }
+    } catch (e) {
+      throw Exception('Failed to load tasks: $e');
+    }
+  }
+
+  
 }

@@ -62,7 +62,6 @@ class LearningMaterialMapper extends ClassMapperBase<LearningMaterial> {
   static LearningMaterialMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = LearningMaterialMapper._());
-      MaterialCompletionStatusMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -70,26 +69,22 @@ class LearningMaterialMapper extends ClassMapperBase<LearningMaterial> {
   @override
   final String id = 'LearningMaterial';
 
-  static String _$materialId(LearningMaterial v) => v.materialId;
+  static String? _$materialId(LearningMaterial v) => v.materialId;
   static const Field<LearningMaterial, String> _f$materialId =
-      Field('materialId', _$materialId, key: r'material_id');
-  static String _$materialName(LearningMaterial v) => v.materialName;
+      Field('materialId', _$materialId, opt: true);
+  static String? _$materialName(LearningMaterial v) => v.materialName;
   static const Field<LearningMaterial, String> _f$materialName =
-      Field('materialName', _$materialName, key: r'material_name');
-  static MaterialCompletionStatus _$isCompleted(LearningMaterial v) =>
-      v.isCompleted;
-  static const Field<LearningMaterial, MaterialCompletionStatus>
-      _f$isCompleted = Field('isCompleted', _$isCompleted,
-          key: r'is_completed', hook: CourseCompletionHook());
+      Field('materialName', _$materialName, opt: true);
+  static String? _$isCompleted(LearningMaterial v) => v.isCompleted;
+  static const Field<LearningMaterial, String> _f$isCompleted =
+      Field('isCompleted', _$isCompleted, opt: true);
   static String? _$materialCompletion(LearningMaterial v) =>
       v.materialCompletion;
-  static const Field<LearningMaterial, String> _f$materialCompletion = Field(
-      'materialCompletion', _$materialCompletion,
-      key: r'material_completion', opt: true);
+  static const Field<LearningMaterial, String> _f$materialCompletion =
+      Field('materialCompletion', _$materialCompletion, opt: true);
   static String? _$totalTimeTaken(LearningMaterial v) => v.totalTimeTaken;
-  static const Field<LearningMaterial, String> _f$totalTimeTaken = Field(
-      'totalTimeTaken', _$totalTimeTaken,
-      key: r'total_time_taken', opt: true);
+  static const Field<LearningMaterial, String> _f$totalTimeTaken =
+      Field('totalTimeTaken', _$totalTimeTaken, opt: true);
 
   @override
   final MappableFields<LearningMaterial> fields = const {
@@ -167,7 +162,7 @@ abstract class LearningMaterialCopyWith<$R, $In extends LearningMaterial, $Out>
   $R call(
       {String? materialId,
       String? materialName,
-      MaterialCompletionStatus? isCompleted,
+      String? isCompleted,
       String? materialCompletion,
       String? totalTimeTaken});
   LearningMaterialCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -184,15 +179,15 @@ class _LearningMaterialCopyWithImpl<$R, $Out>
       LearningMaterialMapper.ensureInitialized();
   @override
   $R call(
-          {String? materialId,
-          String? materialName,
-          MaterialCompletionStatus? isCompleted,
+          {Object? materialId = $none,
+          Object? materialName = $none,
+          Object? isCompleted = $none,
           Object? materialCompletion = $none,
           Object? totalTimeTaken = $none}) =>
       $apply(FieldCopyWithData({
-        if (materialId != null) #materialId: materialId,
-        if (materialName != null) #materialName: materialName,
-        if (isCompleted != null) #isCompleted: isCompleted,
+        if (materialId != $none) #materialId: materialId,
+        if (materialName != $none) #materialName: materialName,
+        if (isCompleted != $none) #isCompleted: isCompleted,
         if (materialCompletion != $none)
           #materialCompletion: materialCompletion,
         if (totalTimeTaken != $none) #totalTimeTaken: totalTimeTaken

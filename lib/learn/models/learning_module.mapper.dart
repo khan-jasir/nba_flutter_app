@@ -21,15 +21,15 @@ class LearningModuleMapper extends ClassMapperBase<LearningModule> {
   @override
   final String id = 'LearningModule';
 
-  static String _$moduleId(LearningModule v) => v.moduleId;
+  static String? _$moduleId(LearningModule v) => v.moduleId;
   static const Field<LearningModule, String> _f$moduleId =
-      Field('moduleId', _$moduleId, key: r'module_id');
-  static String _$moduleName(LearningModule v) => v.moduleName;
+      Field('moduleId', _$moduleId, opt: true);
+  static String? _$moduleName(LearningModule v) => v.moduleName;
   static const Field<LearningModule, String> _f$moduleName =
-      Field('moduleName', _$moduleName, key: r'module_name');
-  static List<LearningMaterial> _$materials(LearningModule v) => v.materials;
+      Field('moduleName', _$moduleName, opt: true);
+  static List<LearningMaterial>? _$materials(LearningModule v) => v.materials;
   static const Field<LearningModule, List<LearningMaterial>> _f$materials =
-      Field('materials', _$materials);
+      Field('materials', _$materials, opt: true);
 
   @override
   final MappableFields<LearningModule> fields = const {
@@ -100,7 +100,7 @@ extension LearningModuleValueCopy<$R, $Out>
 abstract class LearningModuleCopyWith<$R, $In extends LearningModule, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, LearningMaterial,
-          LearningMaterialCopyWith<$R, LearningMaterial, LearningMaterial>>
+          LearningMaterialCopyWith<$R, LearningMaterial, LearningMaterial>>?
       get materials;
   $R call(
       {String? moduleId,
@@ -120,18 +120,20 @@ class _LearningModuleCopyWithImpl<$R, $Out>
       LearningModuleMapper.ensureInitialized();
   @override
   ListCopyWith<$R, LearningMaterial,
-          LearningMaterialCopyWith<$R, LearningMaterial, LearningMaterial>>
-      get materials => ListCopyWith($value.materials,
-          (v, t) => v.copyWith.$chain(t), (v) => call(materials: v));
+          LearningMaterialCopyWith<$R, LearningMaterial, LearningMaterial>>?
+      get materials => $value.materials != null
+          ? ListCopyWith($value.materials!, (v, t) => v.copyWith.$chain(t),
+              (v) => call(materials: v))
+          : null;
   @override
   $R call(
-          {String? moduleId,
-          String? moduleName,
-          List<LearningMaterial>? materials}) =>
+          {Object? moduleId = $none,
+          Object? moduleName = $none,
+          Object? materials = $none}) =>
       $apply(FieldCopyWithData({
-        if (moduleId != null) #moduleId: moduleId,
-        if (moduleName != null) #moduleName: moduleName,
-        if (materials != null) #materials: materials
+        if (moduleId != $none) #moduleId: moduleId,
+        if (moduleName != $none) #moduleName: moduleName,
+        if (materials != $none) #materials: materials
       }));
   @override
   LearningModule $make(CopyWithData data) => LearningModule(

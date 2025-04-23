@@ -20,38 +20,33 @@ class LearningDataSummaryMapper extends ClassMapperBase<LearningDataSummary> {
   @override
   final String id = 'LearningDataSummary';
 
-  static int _$totalCourses(LearningDataSummary v) => v.totalCourses;
+  static int? _$totalCourses(LearningDataSummary v) => v.totalCourses;
   static const Field<LearningDataSummary, int> _f$totalCourses =
-      Field('totalCourses', _$totalCourses, key: r'total_courses');
-  static int _$completedCourses(LearningDataSummary v) => v.completedCourses;
+      Field('totalCourses', _$totalCourses, opt: true);
+  static int? _$completedCourses(LearningDataSummary v) => v.completedCourses;
   static const Field<LearningDataSummary, int> _f$completedCourses =
-      Field('completedCourses', _$completedCourses, key: r'completed_courses');
-  static int _$notStartedCourses(LearningDataSummary v) => v.notStartedCourses;
-  static const Field<LearningDataSummary, int> _f$notStartedCourses = Field(
-      'notStartedCourses', _$notStartedCourses,
-      key: r'not_started_courses');
-  static int _$inProgressCourses(LearningDataSummary v) => v.inProgressCourses;
-  static const Field<LearningDataSummary, int> _f$inProgressCourses = Field(
-      'inProgressCourses', _$inProgressCourses,
-      key: r'in_progress_courses');
-  static int _$totalMaterials(LearningDataSummary v) => v.totalMaterials;
+      Field('completedCourses', _$completedCourses, opt: true);
+  static int? _$notStartedCourses(LearningDataSummary v) => v.notStartedCourses;
+  static const Field<LearningDataSummary, int> _f$notStartedCourses =
+      Field('notStartedCourses', _$notStartedCourses, opt: true);
+  static int? _$inProgressCourses(LearningDataSummary v) => v.inProgressCourses;
+  static const Field<LearningDataSummary, int> _f$inProgressCourses =
+      Field('inProgressCourses', _$inProgressCourses, opt: true);
+  static int? _$totalMaterials(LearningDataSummary v) => v.totalMaterials;
   static const Field<LearningDataSummary, int> _f$totalMaterials =
-      Field('totalMaterials', _$totalMaterials, key: r'total_materials');
-  static int _$completedMaterials(LearningDataSummary v) =>
+      Field('totalMaterials', _$totalMaterials, opt: true);
+  static int? _$completedMaterials(LearningDataSummary v) =>
       v.completedMaterials;
-  static const Field<LearningDataSummary, int> _f$completedMaterials = Field(
-      'completedMaterials', _$completedMaterials,
-      key: r'completed_materials');
-  static int _$incompleteMaterials(LearningDataSummary v) =>
+  static const Field<LearningDataSummary, int> _f$completedMaterials =
+      Field('completedMaterials', _$completedMaterials, opt: true);
+  static int? _$incompleteMaterials(LearningDataSummary v) =>
       v.incompleteMaterials;
-  static const Field<LearningDataSummary, int> _f$incompleteMaterials = Field(
-      'incompleteMaterials', _$incompleteMaterials,
-      key: r'incomplete_materials');
-  static int _$inProgressMaterials(LearningDataSummary v) =>
+  static const Field<LearningDataSummary, int> _f$incompleteMaterials =
+      Field('incompleteMaterials', _$incompleteMaterials, opt: true);
+  static int? _$inProgressMaterials(LearningDataSummary v) =>
       v.inProgressMaterials;
-  static const Field<LearningDataSummary, int> _f$inProgressMaterials = Field(
-      'inProgressMaterials', _$inProgressMaterials,
-      key: r'in_progress_materials');
+  static const Field<LearningDataSummary, int> _f$inProgressMaterials =
+      Field('inProgressMaterials', _$inProgressMaterials, opt: true);
 
   @override
   final MappableFields<LearningDataSummary> fields = const {
@@ -155,24 +150,25 @@ class _LearningDataSummaryCopyWithImpl<$R, $Out>
       LearningDataSummaryMapper.ensureInitialized();
   @override
   $R call(
-          {int? totalCourses,
-          int? completedCourses,
-          int? notStartedCourses,
-          int? inProgressCourses,
-          int? totalMaterials,
-          int? completedMaterials,
-          int? incompleteMaterials,
-          int? inProgressMaterials}) =>
+          {Object? totalCourses = $none,
+          Object? completedCourses = $none,
+          Object? notStartedCourses = $none,
+          Object? inProgressCourses = $none,
+          Object? totalMaterials = $none,
+          Object? completedMaterials = $none,
+          Object? incompleteMaterials = $none,
+          Object? inProgressMaterials = $none}) =>
       $apply(FieldCopyWithData({
-        if (totalCourses != null) #totalCourses: totalCourses,
-        if (completedCourses != null) #completedCourses: completedCourses,
-        if (notStartedCourses != null) #notStartedCourses: notStartedCourses,
-        if (inProgressCourses != null) #inProgressCourses: inProgressCourses,
-        if (totalMaterials != null) #totalMaterials: totalMaterials,
-        if (completedMaterials != null) #completedMaterials: completedMaterials,
-        if (incompleteMaterials != null)
+        if (totalCourses != $none) #totalCourses: totalCourses,
+        if (completedCourses != $none) #completedCourses: completedCourses,
+        if (notStartedCourses != $none) #notStartedCourses: notStartedCourses,
+        if (inProgressCourses != $none) #inProgressCourses: inProgressCourses,
+        if (totalMaterials != $none) #totalMaterials: totalMaterials,
+        if (completedMaterials != $none)
+          #completedMaterials: completedMaterials,
+        if (incompleteMaterials != $none)
           #incompleteMaterials: incompleteMaterials,
-        if (inProgressMaterials != null)
+        if (inProgressMaterials != $none)
           #inProgressMaterials: inProgressMaterials
       }));
   @override

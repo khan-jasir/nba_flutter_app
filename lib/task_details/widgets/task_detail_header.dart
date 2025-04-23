@@ -22,7 +22,7 @@ class TaskDetailsHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'From: $from',
+            'Start : $from',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
@@ -31,7 +31,7 @@ class TaskDetailsHeader extends StatelessWidget {
           ),
           if(to != '') ...[
             Text(
-            'To: $to',
+            'End : $to',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,

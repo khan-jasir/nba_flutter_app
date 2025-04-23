@@ -4,22 +4,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nba_flutter_app/home/view/cubit/home_cubit.dart';
 import 'package:nba_flutter_app/login/view/login.dart';
 import 'package:nba_flutter_app/utils/firebase_push_notifications.dart';
+import 'package:nba_flutter_app/utils/notification_service.dart';
 
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
+    
+    // Initialize Firebase
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: 'YOUR_API_KEY',
-        appId: 'YOUR_APP_ID',
-        messagingSenderId: 'YOUR_SENDER_ID',
-        projectId: 'YOUR_PROJECT_ID',
+        apiKey: 'AIzaSyBc6wqmEPfNAihjL_jmzyUrx77GLvQpT0Q',
+        appId: '1:498795297534:android:060fcef50b078ad7d943af',
+        messagingSenderId: '498795297534',
+        projectId: 'flutter-nba',
+        storageBucket: 'flutter-nba.firebasestorage.app',
       ),
     );
-    await FirebasePushNotifications.getToken();
+
+    // Initialize services
+    await Future.wait([
+      FirebasePushNotifications.init(),
+      NotificationService.initialize(),
+    ]);
+
     runApp(const MyApp());
   } catch (e) {
-    debugPrint('Error initializing Firebase: $e');
+    debugPrint('Error initializing app: $e');
     runApp(const MyApp());
   }
 }

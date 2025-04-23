@@ -49,7 +49,7 @@ class CourseCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),  
           Text(
-            course.courseName,
+            course.courseName ?? '',
             style: TextStyle(
               color: Colors.white.withOpacity(0.6),
               fontWeight: FontWeight.w400,
@@ -58,7 +58,7 @@ class CourseCard extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            course.courseName,
+            course.courseName ?? '',
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: TextStyle(
