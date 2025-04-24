@@ -3,7 +3,7 @@ import 'package:nba_flutter_app/core/local_storage.dart';
 import 'package:nba_flutter_app/home/data/models/task_details.dart';
 import 'package:nba_flutter_app/home/data/models/task_response.dart';
 import 'package:nba_flutter_app/home/domain/home_repository.dart';
-import 'package:nba_flutter_app/learn/models/learning_response.dart';
+import 'package:nba_flutter_app/learn/models/learning_course.dart';
 
 class HomeRepositoryImpl implements HomeRespository {
 
@@ -48,7 +48,7 @@ class HomeRepositoryImpl implements HomeRespository {
   }
 
   @override
-  Future<LearningResponse> getLearningDetails({required String sourceId, required String type}) async {
+  Future<LearningCourse> getLearningDetails({required String sourceId, required String type}) async {
      try {
       final agentId = await LocalStorage.getAgentPhone();
       final response = await _client.get(
@@ -56,7 +56,7 @@ class HomeRepositoryImpl implements HomeRespository {
       );
 
       if (response.statusCode == 200) {
-        return LearningResponseMapper.fromMap(response.data);
+        return LearningCourseMapper.fromMap(response.data['data']);
       } else {
         throw Exception('Failed to load tasks');
       }

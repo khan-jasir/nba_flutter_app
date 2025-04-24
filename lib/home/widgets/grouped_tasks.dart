@@ -115,6 +115,7 @@ class _GroupedTasksState extends State<GroupedTasks> {
                       lob: task.lob ?? '',
                       clientName: task.customerName ?? '',
                       isBirthdayTask: task.isBirthdayTask,
+                      isLearningTask: task.isTrainingTask,
                     ),
                   ),
                 );

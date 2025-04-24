@@ -94,9 +94,8 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(state.copyWith(courseDetailsApiStatus: ApiStatus.loading));
       final courseDetails = await _homeRespository.getLearningDetails(sourceId: sourceId, type: type);
-
       emit(state.copyWith(
-        courseDetails: courseDetails.data?.courses?.first,
+        courseDetails: courseDetails,
         courseDetailsApiStatus: ApiStatus.success,
       ));
     } catch(e) {

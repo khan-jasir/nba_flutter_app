@@ -17,6 +17,7 @@ class _CustomCalendarState extends State<CustomCalendar>
   bool _isCalendarVisible = true;
   late AnimationController _animationController;
   late Animation<double> _animation;
+  bool _showBackToToday = false;
 
   @override
   void initState() {
@@ -56,10 +57,51 @@ class _CustomCalendarState extends State<CustomCalendar>
     });
   }
 
+  bool _isSelectedDateToday() {
+    if (_selectedDay == null) return true;
+    final now = DateTime.now();
+    return _focusedDate.year == now.year &&
+           _focusedDate.month == now.month &&
+           _selectedDay == now.day;
+  }
+
+  void _goToToday() {
+    setState(() {
+      final now = DateTime.now();
+      _focusedDate = now;
+      _selectedDay = now.day;
+      _showBackToToday = false;
+    });
+    if (widget.onDateSelected != null) {
+      widget.onDateSelected!(DateTime.now());
+    }
+  }
+
+  void _goToPreviousMonth() {
+    setState(() {
+      _focusedDate = DateTime(_focusedDate.year, _focusedDate.month - 1);
+      _selectedDay = null;
+      _showBackToToday = true;
+    });
+  }
+
+  void _goToNextMonth() {
+    setState(() {
+      _focusedDate = DateTime(_focusedDate.year, _focusedDate.month + 1);
+      _selectedDay = null;
+      _showBackToToday = true;
+    });
+  }
+
   List<Widget> _buildDayCircles(DateTime month) {
     final firstDay = DateTime(month.year, month.month, 1);
     final totalDays = DateTime(month.year, month.month + 1, 0).day;
     final startWeekday = firstDay.weekday % 7; // Sunday as 0
+
+    // Calculate the date range limits
+    final now = DateTime.now();
+    final minDate = now.subtract(const Duration(days: 15));
+    final maxDate = now;
 
     List<Widget> dayWidgets = [];
 
@@ -68,10 +110,15 @@ class _CustomCalendarState extends State<CustomCalendar>
     }
 
     for (int i = 1; i <= totalDays; i++) {
+      final currentDate = DateTime(month.year, month.month, i);
       final isSelected = i == _selectedDay;
+      // Compare dates by creating new DateTime objects with only year, month, and day
+      final isEnabled = currentDate.isAfter(minDate.subtract(const Duration(days: 1))) && 
+                       !currentDate.isAfter(maxDate);
+
       dayWidgets.add(
         GestureDetector(
-          onTap: () {
+          onTap: isEnabled ? () {
             setState(() {
               _selectedDay = i;
             });
@@ -83,20 +130,21 @@ class _CustomCalendarState extends State<CustomCalendar>
               );
               widget.onDateSelected!(selectedDate);
             }
-          },
+          } : null,
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:
-                  isSelected
-                      ? const Color(0xff0E86A6)
-                      : const Color(0xff1A2A30),
+              color: isSelected
+                  ? const Color(0xff0E86A6)
+                  : isEnabled
+                      ? const Color(0xff1A2A30)
+                      : const Color(0xff1A2A30).withOpacity(0.3),
             ),
             alignment: Alignment.center,
             child: Text(
               i.toString(),
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: isEnabled ? Colors.white : Colors.white.withOpacity(0.5),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -108,23 +156,11 @@ class _CustomCalendarState extends State<CustomCalendar>
     return dayWidgets;
   }
 
-  void _goToPreviousMonth() {
-    setState(() {
-      _focusedDate = DateTime(_focusedDate.year, _focusedDate.month - 1);
-      _selectedDay = null;
-    });
-  }
-
-  void _goToNextMonth() {
-    setState(() {
-      _focusedDate = DateTime(_focusedDate.year, _focusedDate.month + 1);
-      _selectedDay = null;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final monthYear = DateFormat.yMMMM().format(_focusedDate);
+    final today = DateTime.now();
+    final formattedToday = DateFormat('dd-MM-yyyy').format(today);
 
     return Column(
       children: [
@@ -200,6 +236,43 @@ class _CustomCalendarState extends State<CustomCalendar>
                   physics: const NeverScrollableScrollPhysics(),
                   children: _buildDayCircles(_focusedDate),
                 ),
+                if (!_isSelectedDateToday()) ...[
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: GestureDetector(
+                      onTap: _goToToday,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff1B4753),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              formattedToday,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "BACK TO TODAY",
+                              style: TextStyle(
+                                color: const Color(0xff33BADD),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

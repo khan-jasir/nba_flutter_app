@@ -19,8 +19,20 @@ class CoursePreview extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (course != null) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),
+                  child: Text(
+                  course?.courseName ?? '',
+                    style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    ),
+                  ),
+                ),
                 ListView.builder(
                   shrinkWrap: true,
                   primary: false,
@@ -70,19 +82,35 @@ class CoursePreview extends StatelessWidget {
                     }
 
                     final courseDetails = state.courseDetails;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: courseDetails!.modules?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: CourseMaterialCard(
-                            index: index + 1,
-                            learningModule: courseDetails.modules![index],
-                          ),
-                        );
-                      },
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                         Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),
+                           child: Text(
+                            courseDetails?.courseName ?? '',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                                                   ),
+                         ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          primary: false,
+                          itemCount: courseDetails!.modules?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: CourseMaterialCard(
+                                index: index + 1,
+                                learningModule: courseDetails.modules![index],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     );
                   },
                 ),

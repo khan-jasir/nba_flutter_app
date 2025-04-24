@@ -96,6 +96,7 @@ class FirebasePushNotifications {
     const androidDetails = AndroidNotificationDetails(
       _channelId,
       _channelName,
+      icon: 'assets/images/logo.png',
       channelDescription: _channelDescription,
       importance: Importance.max,
       priority: Priority.high,

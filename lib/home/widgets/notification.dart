@@ -61,6 +61,7 @@ void dispose() {
         valueListenable: NotificationService.notificationCount,
         builder: (context, count, child) {
           return Badge.count(
+            backgroundColor: Color(0xffFF8A00),
             count: count,
             child: const Icon(Icons.notifications),
           );

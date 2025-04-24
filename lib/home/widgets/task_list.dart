@@ -58,6 +58,7 @@ class TaskListItems extends StatelessWidget {
                   lob: taskItems[index].lob ?? '',
                   isBirthdayTask: taskItems[index].isBirthdayTask,
                   clientName: taskItems[index].customerName ?? '',
+                  isLearningTask: taskItems[index].isTrainingTask,
                 ),
               ),
             );
@@ -110,6 +111,7 @@ class TaskListItems extends StatelessWidget {
                     lob: pendingTaskItems[index].lob ?? '',
                     isBirthdayTask: pendingTaskItems[index].isBirthdayTask,
                     clientName: pendingTaskItems[index].customerName ?? '',
+                    isLearningTask: pendingTaskItems[index].isTrainingTask,
                   ),
                 ),
               );

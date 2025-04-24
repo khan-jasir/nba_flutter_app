@@ -20,7 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  GroupingType _currentGrouping = GroupingType.byStatus;
+  GroupingType _currentGrouping = GroupingType.byType;
 
   void _toggleGrouping() {
     setState(() {

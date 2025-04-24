@@ -1,7 +1,6 @@
 import 'package:nba_flutter_app/home/data/models/task_details.dart';
 import 'package:nba_flutter_app/home/data/models/task_response.dart';
-import 'package:nba_flutter_app/learn/models/learning_response.dart';
-
+import 'package:nba_flutter_app/learn/models/learning_course.dart';
 
 abstract class HomeRespository {
   Future<TaskResponse> getAllAgentsTask(String date);
@@ -10,7 +9,7 @@ abstract class HomeRespository {
     required String type,
   });
 
-  Future<LearningResponse> getLearningDetails({
+  Future<LearningCourse> getLearningDetails({
     required String sourceId,
     required String type,
   });

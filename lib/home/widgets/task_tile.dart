@@ -12,6 +12,7 @@ class TaskTile extends StatelessWidget {
     required this.priorityLevel,
     required this.lob,
     this.isBirthdayTask = false,
+    this.isLearningTask = false,
     required this.clientName,
   });
 
@@ -21,6 +22,7 @@ class TaskTile extends StatelessWidget {
   final String lob;
   final bool isBirthdayTask;
   final String clientName;
+  final bool isLearningTask;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,17 @@ class TaskTile extends StatelessWidget {
                     ),
                   ),
                 ],
-                if(!isBirthdayTask) ...[
+                if(isLearningTask) ...[
+                  Text(
+                    description,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+                if(!isBirthdayTask && !isLearningTask) ...[
                   Text(
                     '${lob.toUpperCase()} | $clientName',
                     style: TextStyle(
