@@ -37,11 +37,14 @@ class TypeGroupedTaskList extends StatelessWidget {
           final bDate = b.startDate ?? '';
           return aDate.compareTo(bDate) > 0 ? a : b;
         });
+
+        // Count overdue and nearing due tasks
+        final (overdueCount, nearingDueCount) = _countDueTasks(tasksInGroup);
         
         return GroupedTasks(
           groupTitle: TaskItem.getTaskTypeTitle(taskType, tasksInGroup.length),
           tasks: _sortTasksByPriority(tasksInGroup),
-          timestamp: _formatTimestamp(latestTask.startDate ?? ''),
+          timestamp: _formatTimestamp(latestTask.startDate ?? '', overdueCount, nearingDueCount),
           onTaskTap: onTaskTap,
         );
       }).toList(),
@@ -54,25 +57,64 @@ class TypeGroupedTaskList extends StatelessWidget {
       ..sort((a, b) => a.priorityOrder.compareTo(b.priorityOrder));
   }
 
-  String _formatTimestamp(String date) {
-    if (date.isEmpty) return 'No date';
-    
-    try {
-      final DateTime parsedDate = DateTime.parse(date);
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
-      final yesterday = today.subtract(const Duration(days: 1));
-      final taskDate = DateTime(parsedDate.year, parsedDate.month, parsedDate.day);
+  (int, int) _countDueTasks(List<TaskItem> tasks) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    int overdueCount = 0;
+    int nearingDueCount = 0;
 
-      if (taskDate == today) {
-        return 'Today, ${DateFormat('h:mm a').format(parsedDate)}';
-      } else if (taskDate == yesterday) {
-        return 'Yesterday, ${DateFormat('h:mm a').format(parsedDate)}';
-      } else {
-        return DateFormat('MMM d, h:mm a').format(parsedDate);
+    for (final task in tasks) {
+      if (task.endDate?.isEmpty ?? true) {
+        nearingDueCount++; // Consider tasks without dates as overdue
+        continue;
       }
-    } catch (e) {
-      return 'Invalid date';
+
+      try {
+        final taskDate = DateTime.parse(task.endDate!);
+        final daysUntilDue = DateTime(taskDate.year, taskDate.month, taskDate.day)
+            .difference(today)
+            .inDays;
+
+        if (daysUntilDue < 0) {
+          overdueCount++;
+        } else if (daysUntilDue <= 2) {
+          nearingDueCount++;
+        }
+      } catch (e) {
+        overdueCount++; // Consider invalid dates as overdue
+      }
     }
+
+    return (overdueCount, nearingDueCount);
+  }
+
+  String _formatTimestamp(String date, int overdueCount, int nearingDueCount) {
+    final List<String> parts = [];
+    
+    // Add overdue count if any
+    if (overdueCount > 0) {
+      parts.add('$overdueCount overdue');
+    }
+
+    // Add nearing due count if any
+    if (nearingDueCount > 0) {
+      parts.add('$nearingDueCount due soon');
+    }
+
+    // If no due tasks, show regular timestamp
+    if (parts.isEmpty) {
+      if (date.isEmpty) {
+        return 'No due date';
+      } else {
+        try {
+          final DateTime parsedDate = DateTime.parse(date);
+          return DateFormat('MMM d, h:mm a').format(parsedDate);
+        } catch (e) {
+          return 'Invalid date';
+        }
+      }
+    }
+
+    return parts.join(' • ');
   }
 } 

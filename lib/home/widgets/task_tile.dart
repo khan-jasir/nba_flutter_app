@@ -54,36 +54,14 @@ class TaskTile extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 4),
-                if(isBirthdayTask) ...[
-                  Text(
-                    description,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
                   ),
-                ],
-                if(isLearningTask) ...[
-                  Text(
-                    description,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-                if(!isBirthdayTask && !isLearningTask) ...[
-                  Text(
-                    '${lob.toUpperCase()} | $clientName',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+                ),
               ],
             ),
           ),

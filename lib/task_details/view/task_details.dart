@@ -8,6 +8,7 @@ import 'package:nba_flutter_app/task_details/widgets/task_detail_header.dart';
 import 'package:nba_flutter_app/task_details/widgets/take_action_btn.dart';
 import 'package:nba_flutter_app/task_details/widgets/take_action_sheet.dart';
 import 'package:nba_flutter_app/task_details/widgets/task_details_shimmer.dart';
+import 'package:nba_flutter_app/task_details/widgets/task_comments_section.dart';
 import 'package:intl/intl.dart';
 import 'package:nba_flutter_app/utils/api_status.dart';
 
@@ -121,6 +122,7 @@ class _TaskDetailsState extends State<TaskDetailsView> {
                   clientAge: clientAge,
                   clientEmailId: clientEmailId,
                 ),
+                const TaskCommentsSection(),
               ],
             ),
           );

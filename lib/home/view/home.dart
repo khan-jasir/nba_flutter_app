@@ -24,9 +24,9 @@ class _HomeState extends State<Home> {
 
   void _toggleGrouping() {
     setState(() {
-      _currentGrouping = _currentGrouping == GroupingType.byStatus
+      _currentGrouping = _currentGrouping == GroupingType.bydefault
           ? GroupingType.byType
-          : GroupingType.byStatus;
+          : GroupingType.bydefault;
     });
   }
 
@@ -71,13 +71,13 @@ class _HomeState extends State<Home> {
                       child: IconButton(
                         onPressed: _toggleGrouping,
                         icon: Icon(
-                          _currentGrouping == GroupingType.byStatus
+                          _currentGrouping == GroupingType.bydefault
                               ? Icons.view_list
                               : Icons.view_agenda,
                           color: Colors.white,
                           size: 24,
                         ),
-                        tooltip: _currentGrouping == GroupingType.byStatus
+                        tooltip: _currentGrouping == GroupingType.bydefault
                             ? 'Group by Type'
                             : 'Group by Status',
                       ),

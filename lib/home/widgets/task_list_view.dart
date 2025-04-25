@@ -3,13 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nba_flutter_app/home/data/models/task_item.dart';
 import 'package:nba_flutter_app/home/view/cubit/home_cubit.dart';
 import 'package:nba_flutter_app/home/widgets/grouped_task_list.dart';
+import 'package:nba_flutter_app/home/widgets/task_list.dart';
 import 'package:nba_flutter_app/home/widgets/type_grouped_task_list.dart';
 import 'package:nba_flutter_app/learn/view/course_preview.dart';
 import 'package:nba_flutter_app/task_details/view/task_details.dart';
 import 'package:nba_flutter_app/utils/page_transition.dart';
 
 enum GroupingType {
-  byStatus,
+  bydefault,
   byType,
 }
 
@@ -52,11 +53,8 @@ class TaskListView extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        grouping == GroupingType.byStatus
-            ? GroupedTaskList(
-                tasks: tasks,
-                onTaskTap: (task) => _handleTaskTap(context, task),
-              )
+        grouping == GroupingType.bydefault
+            ? TaskListItems(taskItems: tasks, pendingTaskItems: tasks.where((task) => task.finalStatus == 'Pending').toList())
             : TypeGroupedTaskList(
                 tasks: tasks,
                 onTaskTap: (task) => _handleTaskTap(context, task),

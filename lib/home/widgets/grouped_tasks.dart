@@ -23,6 +23,26 @@ class GroupedTasks extends StatefulWidget {
 class _GroupedTasksState extends State<GroupedTasks> {
   bool _isExpanded = false;
 
+  Widget _buildTimestamp() {
+    final text = widget.timestamp.toLowerCase();
+    if (text.contains('overdue') || text.contains('due today') || text.contains('due tomorrow') || text.contains('due in 2 days')) {
+      return Text(
+        '${widget.tasks.length} items • ${widget.timestamp}',
+        style: TextStyle(
+          fontSize: 14,
+          color: text.contains('overdue') ? Colors.red : Colors.red[300],
+        ),
+      );
+    }
+    return Text(
+      '${widget.tasks.length} items • ${widget.timestamp}',
+      style: TextStyle(
+        color: Colors.grey[400],
+        fontSize: 14,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,13 +77,7 @@ class _GroupedTasksState extends State<GroupedTasks> {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          '${widget.tasks.length} items • ${widget.timestamp}',
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 14,
-                          ),
-                        ),
+                        _buildTimestamp(),
                       ],
                     ),
                   ),
